@@ -1,0 +1,100 @@
+-- Criando o banco de dados
+CREATE DATABASE cafemartins;
+USE cafemartins;
+
+-- Tabela Client
+CREATE TABLE Client (
+    cpf_cnpj VARCHAR(20) PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    contato VARCHAR(100),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    razao_social VARCHAR(255),
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    excluido_em DATETIME NULL
+);
+
+-- Tabela Company
+CREATE TABLE Company (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    contato VARCHAR(100),
+    telefone VARCHAR(20),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    atualizado_por INT,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    criado_por INT NOT NULL
+);
+
+-- Tabela Floor
+CREATE TABLE Floor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL,
+    criado_por INT NOT NULL,
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabela Media
+CREATE TABLE Media (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    cliente_id VARCHAR(20),
+    caminho VARCHAR(255) NOT NULL,
+    tipo ENUM('imagem', 'video') NOT NULL,
+    status ENUM('ativo', 'inativo') NOT NULL,
+    data_inicio DATE,
+    data_fim DATE,
+    FOREIGN KEY (cliente_id) REFERENCES Client(cpf_cnpj)
+);
+
+-- Tabela Person
+CREATE TABLE Person (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    contato VARCHAR(100),
+    telefone VARCHAR(20),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    criado_por INT NOT NULL,
+    atualizado_por INT,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    client_id VARCHAR(20),
+    FOREIGN KEY (client_id) REFERENCES Client(cpf_cnpj)
+);
+
+-- Tabela Room
+CREATE TABLE Room (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL,
+    andar_id INT,
+    criado_por INT NOT NULL,
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em DATETIME,
+    atualizado_por INT,
+    excluido_em DATETIME,
+    excluido_por INT,
+    FOREIGN KEY (andar_id) REFERENCES Floor(id)
+);
+
+-- Tabela User
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status VARCHAR(50) NOT NULL,
+    tipo_usuario VARCHAR(50) NOT NULL,
+    nome_completo VARCHAR(255) NOT NULL,
+    cpf VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    login VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

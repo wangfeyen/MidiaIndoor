@@ -1,0 +1,98 @@
+-- Tabela Cliente(client)
+CREATE TABLE Cliente (
+  	id serial primary key,
+    cpf_cnpj VARCHAR(20) UNIQUE NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    contato VARCHAR(100),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    razao_social VARCHAR(255),
+    criado_em timestamp without time zone NOT NULL DEFAULT now(),
+    atualizado_em timestamp without time zone NULL DEFAULT now(),
+    excluido_em timestamp without time zone NULL
+    
+);
+
+-- Tabela Company
+CREATE TABLE Company (
+    id serial PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    contato VARCHAR(100),
+    telefone VARCHAR(20),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    atualizado_por INT,
+    atualizado_em timestamp without time zone NOT NULL DEFAULT now(),
+    criado_por INT NOT NULL
+);
+
+-- Tabela Andar(floor)
+CREATE TABLE Andar (
+    id serial PRIMARY KEY,
+    numero INT NOT NULL,
+    criado_por INT NOT NULL,
+    criado_em timestamp without time zone NOT NULL DEFAULT now()
+);
+
+-- Tabela Midia(media)
+CREATE TABLE Midia (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    cliente_id VARCHAR(20),
+    caminho VARCHAR(255) NOT NULL,
+    tipo VARCHAR(10) CHECK (tipo IN ('imagem', 'video')) NOT NULL,
+    status VARCHAR(10) CHECK (status IN ('ativo', 'inativo')) NOT NULL,
+    data_inicio DATE,
+    data_fim DATE,
+    FOREIGN KEY (client_id) REFERENCES Client(id)
+);
+
+-- Tabela Person
+CREATE TABLE Person (
+    id serial PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    contato VARCHAR(100),
+    telefone VARCHAR(20),
+    status VARCHAR(50) NOT NULL,
+    logo_path VARCHAR(255),
+    criado_por INT NOT NULL,
+    atualizado_por INT,
+    atualizado_em timestamp without time zone NOT NULL DEFAULT now(),
+    client_id VARCHAR(20),
+    FOREIGN KEY (client_id) REFERENCES Client(cpf_cnpj)
+);
+
+-- Tabela Room
+CREATE TABLE Room (
+    id serial PRIMARY KEY,
+    numero INT NOT NULL,
+    andar_id INT,
+    criado_por INT NOT NULL,
+    criado_em timestamp without time zone NOT NULL DEFAULT now(),
+    atualizado_em timestamp without time zone NOT NULL DEFAULT now(),
+    atualizado_por INT,
+    excluido_em timestamp without time zone NULL,
+    excluido_por INT,
+    FOREIGN KEY (andar_id) REFERENCES Floor(id)
+);
+
+-- Tabela User
+CREATE TABLE Users(
+    id serial PRIMARY KEY,
+    status VARCHAR(50) NOT NULL,
+    tipo_usuario VARCHAR(50) NOT NULL,
+    nome_completo VARCHAR(255) NOT NULL,
+    cpf VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    login VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    criado_em timestamp without time zone NOT NULL DEFAULT now(),
+    atualizado_em timestamp without time zone NOT NULL DEFAULT now()
+);
