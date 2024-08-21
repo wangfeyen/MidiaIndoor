@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {Client} from "../../../modules/client/entities/client.entity";
+import {Client} from "./client.entity";
 
-@Entity('companyClient')
-export class CompanyClient extends Client {
+@Entity('personClient')
+export class PersonClient extends Client {
     @PrimaryGeneratedColumn()
     id: number;
 

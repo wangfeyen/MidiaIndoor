@@ -71,24 +71,4 @@ import config from './knexfile';
 const environment = process.env.NODE_ENV || 'development';
 const db = knex(config[environment]);
 
-// Função para verificar a conexão com o banco de dados
-//  Yen
-async function checkDatabaseConnection() {
-    try {
-      // Executa uma consulta simples para verificar a conexão
-      await db.raw('SELECT 1+1 AS result');
-      console.log('Conexão com o banco de dados estabelecida com sucesso!');
-    } catch (err) {
-      console.error('Erro ao conectar ao banco de dados:', err);
-    } finally {
-      // Encerra a conexão com o banco de dados
-      // await db.destroy();
-    }
-  }
-  
-  // Chama a função para verificar a conexão
-  checkDatabaseConnection();
-
-
-
 export default app;
