@@ -8,14 +8,13 @@ export class Client{
     @Column()
     email:string;
 
-    @Column()
-    telefones:string;
+ 
 
-    @Column()
-    endereço:string;
+    // @Column()
+    // endereço:string;
 
-    @Column()
-    contrato:string;
+    // @Column()
+    // contrato:string;
 
     @CreateDateColumn()
     criado_em:Date;
@@ -25,7 +24,5 @@ export class Client{
 
     @DeleteDateColumn()
     deletado_em:Date
-
-    @OneToOne(()=>)
     
 }
