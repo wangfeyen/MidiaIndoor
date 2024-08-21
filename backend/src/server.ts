@@ -11,6 +11,15 @@ import mediaRoutes from './routes/mediaRoutes';
 import clientRoutes from './routes/clientRoutes';
 import companyRoutes from './routes/companyRoutes';
 import helmet from 'helmet';
+import { AppDataSource } from './database/app-data-source';
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err)
+    })
 
 const app = express();
 const PORT = process.env.PORT || 8000;
