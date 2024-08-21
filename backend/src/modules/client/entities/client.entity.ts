@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { CompanyClient } from "./companyclient.entity";
+import { PersonClient } from "./personclient.entity";
 
 @Entity('clients')
 export class Client{
@@ -17,9 +18,14 @@ export class Client{
 
     @DeleteDateColumn()
     deletado_em:Date
- 
+    
+    //Relations
     @OneToOne(()=>CompanyClient, companyClient=>companyClient.client)
     companyClient:CompanyClient;
+
+    @OneToOne(()=>PersonClient, personClient=>personClient.client)
+    personClient:CompanyClient;
+
     // @Column()
     // endereço:string;
 
