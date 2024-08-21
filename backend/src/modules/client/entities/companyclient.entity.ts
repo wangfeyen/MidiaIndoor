@@ -1,8 +1,10 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import {Client} from "./client.entity";
+import { Client } from "./client.entity";
+
+
 
 @Entity('companyClient')
-export class CompanyClient extends Client {
+export class CompanyClient {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -18,7 +20,10 @@ export class CompanyClient extends Client {
     @Column()
     nomeFantasia:string;
 
-    @OneToOne(()=>Client, (client)=>client.companyClient)
+    @Column()
+    clientId:number
+
+    @OneToOne(()=>Client, client=>client.companyClient)
     @JoinColumn({name:'id'})
     client:Client;
 

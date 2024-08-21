@@ -4,19 +4,21 @@ import { CompanyClient } from "../entities/companyclient.entity";
 
 export const createCompanyClient = async(req:Request,res:Response)=>{
     try {
-        const {cnpj,telefones,razaoSocial,nomeFantasia,email} = req.body;
+        const {cnpj,telefones,razaoSocial,nomeFantasia,email,clientId} = req.body;
         // console.log(req.body)
         const companyClient = await AppDataSource.getRepository(CompanyClient).save({
             cnpj:cnpj,
             telefones:telefones,
             razaoSocial:razaoSocial,
             nomeFantasia:nomeFantasia,
-            email:email
+            email:email,
+            clientId:clientId
         })
         console.log(`Company Client ${companyClient.nomeFantasia} created`)
         res.status(201).json({ok:true, message:"Cliente PJ criado com sucesso"})
     } catch (error) {
         res.status(500).json({ok:false,message:"Não foi possível criar cliente PJ"})
+        console.log(error)
     }
 }
 
@@ -24,6 +26,7 @@ export const findAllCompanyClients = async(req:Request,res:Response)=>{
     try {
         const companyClients = await AppDataSource.getRepository(CompanyClient).find()
         res.status(200).json(companyClients)
+        console.log(companyClients)
     } catch (error) {
         res.status(400).json({ok:false,message:"Não foi encontrado nenhum cliente PJ"})
     }
