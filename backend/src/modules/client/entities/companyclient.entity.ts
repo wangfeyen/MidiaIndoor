@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfterInsert, AfterUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Client } from "./client.entity";
+import { AppDataSource } from "../../../database/app-data-source";
 
 
 
@@ -23,8 +24,8 @@ export class CompanyClient {
     @Column()
     clientId:number
 
-    @OneToOne(()=>Client, client=>client.companyClient)
-    @JoinColumn({name:'id'})
+    @OneToOne(() => Client, (client)=>client.companyClient)
+    @JoinColumn({name:"clientId"})
     client:Client;
 
 

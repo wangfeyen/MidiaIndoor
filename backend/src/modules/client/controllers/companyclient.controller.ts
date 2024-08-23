@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../../../database/app-data-source";
 import { CompanyClient } from "../entities/companyclient.entity";
+import { Client } from "../entities/client.entity";
 
 export const createCompanyClient = async(req:Request,res:Response)=>{
     try {
@@ -16,6 +17,11 @@ export const createCompanyClient = async(req:Request,res:Response)=>{
         })
         console.log(`Company Client ${companyClient.nomeFantasia} created`)
         res.status(201).json({ok:true, message:"Cliente PJ criado com sucesso"})
+
+        //adicionar o nome fantasia ao nome do cliente
+        const clientRepository = await AppDataSource.getRepository(Client).update(
+            {id:clientId}, { nome: nomeFantasia });
+        
     } catch (error) {
         res.status(500).json({ok:false,message:"Não foi possível criar cliente PJ"})
         console.log(error)

@@ -15,8 +15,11 @@ export class PersonClient {
     @Column({type:'simple-array',nullable:true})
     telefones?:string[];
 
+    @Column()
+    clientId:number
+
     @OneToOne(()=>Client, client=>client.personClient)
-    @JoinColumn({name:'id'})
+    @JoinColumn({name:'clientId'})
     client:Client;
 
 
